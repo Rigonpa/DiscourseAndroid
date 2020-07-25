@@ -8,8 +8,10 @@ object TopicsRepo {
         return field
     }
 
+    fun getTopic(id: String): Topic? = topics.find { it.id == id }
+
     //    fun createDummyTopics(count: Int = 10): List<Topic> {
-    fun createDummyTopics(count: Int = 10) =
+    fun createDummyTopics(count: Int = 20) =
         (0..count).map {
             Topic(
                 title = "Title $it",
