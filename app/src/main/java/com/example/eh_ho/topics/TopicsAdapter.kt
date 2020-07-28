@@ -1,11 +1,11 @@
-package com.example.eh_ho
+package com.example.eh_ho.topics
 
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.eh_ho.R
+import com.example.eh_ho.Topic
+import com.example.eh_ho.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
 
 class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)? = null) : RecyclerView.Adapter<TopicsAdapter.TopicHolder>() {
@@ -21,7 +21,8 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)? = null) : Recycle
     }
 
     override fun onCreateViewHolder(list: ViewGroup, viewType: Int): TopicHolder {
-        val view = LayoutInflater.from(list.context).inflate(R.layout.item_topic, list, false)
+        val view = list.inflate(R.layout.item_topic)
+//        val view = LayoutInflater.from(list.context).inflate(R.layout.item_topic, list, false)
 
         return TopicHolder(view)
     }
