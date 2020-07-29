@@ -9,7 +9,8 @@ import kotlinx.android.synthetic.main.activity_topics.*
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
 
-class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionListener {
+class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionListener,
+    CreateTopicFragment.CreateTopicInteractionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
@@ -35,5 +36,9 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
 
     override fun onShowPosts(topic: Topic) {
         goToPosts(topic)
+    }
+
+    override fun onTopicCreated() {
+        supportFragmentManager.popBackStack()
     }
 }

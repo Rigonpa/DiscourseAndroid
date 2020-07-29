@@ -2,13 +2,22 @@ package com.example.eh_ho
 
 object TopicsRepo {
     val topics: MutableList<Topic> = mutableListOf()
-    get() {
-        if(field.isEmpty())
-            field.addAll(createDummyTopics())
-        return field
-    }
+//        get() {
+//            if (field.isEmpty())
+//                field.addAll(createDummyTopics())
+//            return field
+//        }
 
     fun getTopic(id: String): Topic? = topics.find { it.id == id }
+
+    fun addTopic(title: String, content: String) {
+        topics.add(
+            Topic(
+                title = title,
+                content = content
+            )
+        )
+    }
 
     //    fun createDummyTopics(count: Int = 10): List<Topic> {
     fun createDummyTopics(count: Int = 20) =
@@ -18,18 +27,19 @@ object TopicsRepo {
                 content = "Content $it"
             )
         }
-    /*
-    val dummies = mutableListOf<Topic>()
+}
+/*
+val dummies = mutableListOf<Topic>()
 
-    for (i in 0..count) {
-        val topic =  Topic(
-            title = "Topic $i",
-            content = "Content $i"
-        )
-        dummies.add(topic)
-    }
-    return dummies
-     */
+for (i in 0..count) {
+    val topic =  Topic(
+        title = "Topic $i",
+        content = "Content $i"
+    )
+    dummies.add(topic)
+}
+return dummies
+ */
 
 //        val lambda: (Int) -> Topic = {
 //            Topic(
@@ -47,4 +57,3 @@ object TopicsRepo {
 //        }
 
 //    }
-}
