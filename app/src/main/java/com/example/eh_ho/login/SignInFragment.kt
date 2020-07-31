@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.eh_ho.LoginActivity
 import com.example.eh_ho.R
+import com.example.eh_ho.data.SignInModel
 import com.example.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import kotlin.math.sign
 
 class SignInFragment: Fragment() {
 
@@ -42,7 +41,11 @@ class SignInFragment: Fragment() {
             signInInteractionListener?.onGoToSignUp()
         }
         buttonLogin.setOnClickListener {
-            signInInteractionListener?.onSignIn()
+            val signInModel = SignInModel(
+                inputUser.text.toString(),
+                inputPassword.text.toString()
+            )
+            signInInteractionListener?.onSignIn(signInModel)
         }
     }
 
@@ -53,6 +56,6 @@ class SignInFragment: Fragment() {
 
     interface SignInInteractionListener {
         fun onGoToSignUp()
-        fun onSignIn()
+        fun onSignIn(signInModel: SignInModel)
     }
 }

@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eh_ho.R
-import com.example.eh_ho.Topic
+import com.example.eh_ho.data.Topic
 import com.example.eh_ho.inflate
 import kotlinx.android.synthetic.main.item_topic.view.*
 import java.util.*

@@ -1,4 +1,4 @@
-package com.example.eh_ho
+package com.example.eh_ho.data
 
 object TopicsRepo {
     val topics: MutableList<Topic> = mutableListOf()

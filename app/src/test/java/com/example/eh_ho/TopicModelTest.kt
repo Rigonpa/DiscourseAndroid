@@ -1,5 +1,6 @@
 package com.example.eh_ho
 
+import com.example.eh_ho.data.Topic
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.lang.IllegalArgumentException

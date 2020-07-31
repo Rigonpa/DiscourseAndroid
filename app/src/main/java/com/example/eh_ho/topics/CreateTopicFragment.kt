@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.example.eh_ho.R
-import com.example.eh_ho.TopicsRepo
+import com.example.eh_ho.data.TopicsRepo
 import com.example.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_create_topic.*
 
