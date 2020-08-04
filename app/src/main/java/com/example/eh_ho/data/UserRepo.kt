@@ -37,7 +37,7 @@ object UserRepo {
                 // 5.1 Procesar error
                 err.printStackTrace()
 
-                val errorObject = if(err is ServerError && err.networkResponse.statusCode == 404) {
+                val errorObject = if (err is ServerError && err.networkResponse.statusCode == 404) {
                     RequestError(err, messageResId = R.string.error_not_registered)
                 } else if (err is NetworkError) {
                     RequestError(err, messageResId = R.string.error_not_internet)
@@ -55,6 +55,37 @@ object UserRepo {
 
         // 3. Otorgar permisos de accesos a internet
 
+    }
+
+    fun signUp(
+        context: Context,
+        signUpModel: SignUpModel,
+        onSuccess: ((SignUpModel) -> Unit),
+        onError: ((RequestError) -> Unit)
+    ) {
+        val request = PostRequest(
+            Request.Method.POST,
+            ApiRoutes.signUp(),
+            signUpModel.toJson(),
+            { response ->
+                val successStatus = response?.getBoolean("success") ?: false
+                if (successStatus)
+                    onSuccess(signUpModel)
+                else
+                    onError(RequestError(message = response?.getString("message")))
+
+            },
+            { err ->
+                err.printStackTrace()
+                val requestError = if (err is NetworkError)
+                    RequestError(err, messageResId = R.string.error_not_internet)
+                else
+                    RequestError(err)
+                onError(requestError)
+            }
+        )
+
+        ApiRequestQueue.getRequestQueue(context).add(request)
     }
 
     private fun saveSession(context: Context, username: String) {

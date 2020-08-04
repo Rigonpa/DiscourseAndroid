@@ -1,15 +1,52 @@
 package com.example.eh_ho.data
 
+import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 data class Topic(
     val id: String = UUID.randomUUID().toString(),
     val title: String,
-    val content: String,
     val date: Date = Date(),
     val posts: Int = 0,
     val views: Int = 0
 ) {
+
+    // Añadiendo contexto estático dentro de cualquier clase
+    companion object {
+        // No necesitamos crear un objeto Dream para invocar los siguiente métodos:
+        fun parseTopicList(response: JSONObject): List<Topic> {
+            val objectLst = response.getJSONObject("topic_list")
+                .getJSONArray("topics")
+
+            val topics = mutableListOf<Topic>()
+
+            for(i in 0 until objectLst.length()) {
+                val parsedTopic = parseTopic(objectLst.getJSONObject(i))
+                topics.add(parsedTopic)
+            }
+            return topics
+        }
+
+
+        fun parseTopic(jsonObject: JSONObject): Topic {
+            val date = jsonObject.getString("created_at")
+                .replace("Z", "+0000")
+
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
+            val dateFormatted = dateFormat.parse(date) ?: Date()
+
+            return Topic(
+                id = jsonObject.getInt("id").toString(),
+                title = jsonObject.getString("title").toString(),
+                date = dateFormatted,
+                posts = jsonObject.getInt("posts_count"),
+                views = jsonObject.getInt("views")
+            )
+        }
+    }
+
+
     val MINUTE_MILLIS = 1000L * 60
     val HOUR_MILLIS = MINUTE_MILLIS * 60
     val DAY_MILLIS = HOUR_MILLIS * 24

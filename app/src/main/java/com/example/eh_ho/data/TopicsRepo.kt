@@ -1,5 +1,7 @@
 package com.example.eh_ho.data
 
+import android.content.Context
+
 object TopicsRepo {
     val topics: MutableList<Topic> = mutableListOf()
 //        get() {
@@ -8,25 +10,31 @@ object TopicsRepo {
 //            return field
 //        }
 
+    fun getTopics(
+        context: Context,
+        onSuccess: (List<Topic>) -> Unit,
+        onError: (RequestError) -> Unit
+    ) {
+
+    }
+
     fun getTopic(id: String): Topic? = topics.find { it.id == id }
 
     fun addTopic(title: String, content: String) {
         topics.add(
             Topic(
-                title = title,
-                content = content
+                title = title
             )
         )
     }
 
-    //    fun createDummyTopics(count: Int = 10): List<Topic> {
-    fun createDummyTopics(count: Int = 20) =
-        (0..count).map {
-            Topic(
-                title = "Title $it",
-                content = "Content $it"
-            )
-        }
+//    fun createDummyTopics(count: Int = 10): List<Topic> {
+//    fun createDummyTopics(count: Int = 20) =
+//        (0..count).map {
+//            Topic(
+//                title = "Title $it"
+//            )
+//        }
 }
 /*
 val dummies = mutableListOf<Topic>()

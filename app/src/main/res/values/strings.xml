@@ -49,4 +49,5 @@
     <string name="error_not_registered">User not registered</string>
     <string name="error_not_internet">Not internet conexion</string>
     <string name="error_default">Something bad happened</string>
+    <string name="message_sign_up">Please check your email to finish the process</string>
 </resources>

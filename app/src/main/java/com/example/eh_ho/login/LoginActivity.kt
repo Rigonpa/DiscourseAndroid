@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.eh_ho.data.RequestError
 import com.example.eh_ho.data.SignInModel
+import com.example.eh_ho.data.SignUpModel
 import com.example.eh_ho.data.UserRepo
 import com.example.eh_ho.login.SignInFragment
 import com.example.eh_ho.login.SignUpFragment
@@ -76,8 +77,15 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
             .commit()
     }
 
-    override fun onSignUp() {
+    override fun onSignUp(signUpModel: SignUpModel) {
         enableLoading()
+        UserRepo.signUp(this.applicationContext, signUpModel, {
+            enableLoading(false)
+            Snackbar.make(container, R.string.message_sign_up, Snackbar.LENGTH_LONG).show()
+        }, {
+            enableLoading(false)
+            handleError(it)
+        })
 //        simulateLoading()
     }
 

@@ -1,7 +1,6 @@
 package com.example.eh_ho.data
 
 import android.net.Uri
-import kotlinx.android.synthetic.main.fragment_sign_up.view.*
 
 object ApiRoutes {
 
@@ -9,6 +8,12 @@ object ApiRoutes {
         uriBuilder()
             .appendPath("users")
             .appendPath("${username}.json")
+            .build()
+            .toString()
+
+    fun signUp() =
+        uriBuilder()
+            .appendPath("users")
             .build()
             .toString()
 
