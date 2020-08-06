@@ -15,3 +15,13 @@ data class SignUpModel(val username: String, val email: String, val password: St
             .put("approved", true)
 
 }
+
+data class CreateTopicModel(
+    val title: String,
+    val content: String
+) {
+    fun toJson(): JSONObject =
+        JSONObject()
+            .put("title", title)
+            .put("raw", content)
+}

@@ -53,12 +53,15 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
         // Authentication
         enableLoading()
 //        simulateLoading(signInModel)
-        UserRepo.signIn(this.applicationContext, signInModel, {
-            showTopics()
-        }, {
-            enableLoading(false)
-            handleError(it)
-        })
+        UserRepo.signIn(
+            this.applicationContext,
+            signInModel,
+            {
+                showTopics()
+            }, {
+                enableLoading(false)
+                handleError(it)
+            })
 
     }
 
@@ -98,72 +101,4 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
             viewLoading.visibility = View.INVISIBLE
         }
     }
-
-//    private fun simulateLoading(signInModel: SignInModel) {
-//        val runnable = Runnable {
-//            Thread.sleep(3000)
-//            viewLoading.post {
-//                UserRepo.signIn(this.applicationContext, signInModel.username)
-//                showTopics()
-//            }
-//        }
-//        Thread(runnable).start()
-
-//        val task = object: AsyncTask<Long, Void, Boolean>() {
-//            override fun doInBackground(vararg time: Long?): Boolean {
-//                Thread.sleep(time[0] ?: 3000)
-//                return true
-//            }
-//
-//            override fun onPostExecute(result: Boolean?) {
-//                super.onPostExecute(result)
-//                showTopics()
-//            }
-//        }
-//
-//        task.execute(5000)
-//    }
-
 }
-
-//
-//class Listener : View.OnClickListener {
-//    override fun onClick(view: View?) {
-//        Toast.makeText(view?.context, "Welcome to Eh-Ho", Toast.LENGTH_SHORT).show()
-//    }
-//
-//}
-
-
-//      Formas de implantar un setOnClickListener, de la más extensa a la más comprimida:
-//        val button: Button = findViewById(R.id.button_login)
-//        val inputUsername: EditText = findViewById(R.id.inputUser)
-
-//      3B. Uso de lambda - Modo corto
-//        button.setOnClickListener {
-//            Toast.makeText(it?.context, "Welcome to LAMMBDAA SHORT ${inputUsername.text}", Toast.LENGTH_SHORT).show()
-//        }
-
-//      3A. Uso de función anónima - lambda - Explícito
-//        val listenerLambda: (View) -> Unit = {
-//            Toast.makeText(it?.context, "Welcome to LAMMBDAA", Toast.LENGTH_SHORT).show()
-//        }
-//        button.setOnClickListener(listenerLambda)
-
-
-//      2. Uso de clase anónima
-//        val listener : View.OnClickListener = object : View.OnClickListener {
-//            override fun onClick(view: View?) {
-//                Toast.makeText(view?.context, "Welcome to Eh-Ho", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//        button.setOnClickListener(listener)
-
-//      1B. Uso de Interfaz - Modo dios
-//        button.setOnClickListener(View.OnClickListener {
-//            Toast.makeText(it.context, "Welcomecome", Toast.LENGTH_SHORT).show()
-//        })
-//      1A. Uso de interfaz - Modo tradicional, explícito
-//        button.setOnClickListener(Listener())
-//    }
-

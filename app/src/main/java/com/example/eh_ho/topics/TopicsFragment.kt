@@ -12,9 +12,16 @@ import com.example.eh_ho.data.TopicsRepo
 import com.example.eh_ho.inflate
 import kotlinx.android.synthetic.main.fragment_topics.*
 
-class TopicsFragment: Fragment() {
+class TopicsFragment : Fragment() {
 
     var topicsInteractionListener: TopicsInteractionListener? = null
+
+    private val topicsAdapter: TopicsAdapter by lazy {
+        val adapter = TopicsAdapter {
+            this.topicsInteractionListener?.onShowPosts(it)
+        }
+        adapter
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,7 +44,7 @@ class TopicsFragment: Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_logout -> this.topicsInteractionListener?.onLogout()
         }
         return super.onOptionsItemSelected(item)
@@ -53,19 +60,36 @@ class TopicsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = TopicsAdapter {
-            this.topicsInteractionListener?.onShowPosts(it)
-        }
 
         buttonCreate.setOnClickListener {
             this.topicsInteractionListener?.onCreateTopic()
         }
 
-        adapter.setTopics(TopicsRepo.topics)
+        topicsAdapter.setTopics(TopicsRepo.topics)
 
         listTopics.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        listTopics.adapter = adapter
+        listTopics.adapter = topicsAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        loadingTopics()
+    }
+
+    private fun loadingTopics() {
+        context?.let { context ->
+            TopicsRepo.getTopics(
+                context.applicationContext,
+                {
+                   topicsAdapter.setTopics(it)
+                },
+                {
+                    // TODO: Manejo de errores
+                }
+            )
+        }
     }
 
     override fun onDetach() {

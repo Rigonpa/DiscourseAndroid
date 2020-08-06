@@ -67,6 +67,7 @@ object UserRepo {
             Request.Method.POST,
             ApiRoutes.signUp(),
             signUpModel.toJson(),
+            null,
             { response ->
                 val successStatus = response?.getBoolean("success") ?: false
                 if (successStatus)
@@ -94,6 +95,11 @@ object UserRepo {
             .edit()
             .putString(PREFERENCES_USERNAME, username)
             .apply()
+    }
+
+    fun getUsername(context: Context): String? {
+        val preferences = context.getSharedPreferences(PREFERENCES_SESSION, Context.MODE_PRIVATE)
+        return preferences.getString(PREFERENCES_USERNAME, null)
     }
 
     fun logout(context: Context) {

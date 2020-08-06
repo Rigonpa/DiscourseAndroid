@@ -32,7 +32,6 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)? = null) :
     override fun onBindViewHolder(holder: TopicHolder, position: Int) {
         val topic = topics[position]
         holder.topic = topic
-//        holder.itemView.findViewById<TextView>(R.id.label_topic).setText(topic.title)
         holder.itemView.setOnClickListener(listener)
     }
 
@@ -48,9 +47,8 @@ class TopicsAdapter(val topicClickListener: ((Topic) -> Unit)? = null) :
                 field = value
                 itemView.tag = field
 
-                field?.let {// Siempre y cuando field no sea nulo ejecuta el siguiente código:
+                field?.let {
                     itemView.labelTitle.text = it.title // Viva las extensions
-//            itemView.findViewById<TextView>(R.id.label_topic).text = it.title
                     itemView.labelPosts.text = it.posts.toString()
                     itemView.labelViews.text = it.views.toString()
                     setTimeOffset(it.getTimeOffset())
