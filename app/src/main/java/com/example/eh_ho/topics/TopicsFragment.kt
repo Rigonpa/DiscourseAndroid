@@ -79,7 +79,7 @@ class TopicsFragment : Fragment() {
         loadingTopics()
     }
 
-    private fun loadingTopics() {
+    fun loadingTopics() {
         loadingDialogFragment?.show(childFragmentManager, TAG_LOADING_DIALOG)
         context?.let { context ->
             TopicsRepo.getTopics(
@@ -91,6 +91,7 @@ class TopicsFragment : Fragment() {
                 {
                     loadingDialogFragment?.dismiss()
                     // TODO: Manejo de errores
+                    this.topicsInteractionListener?.onErrorTopics()
                 }
             )
         }
@@ -105,5 +106,6 @@ class TopicsFragment : Fragment() {
         fun onCreateTopic()
         fun onLogout()
         fun onShowPosts(topic: Topic)
+        fun onErrorTopics()
     }
 }
