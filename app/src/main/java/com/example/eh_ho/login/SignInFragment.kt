@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import com.example.eh_ho.R
 import com.example.eh_ho.data.SignInModel
 import com.example.eh_ho.inflate
+import kotlinx.android.synthetic.main.fragment_create_topic.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 
-class SignInFragment: Fragment() {
+class SignInFragment : Fragment() {
 
     var signInInteractionListener: SignInInteractionListener? = null
 
@@ -41,13 +42,26 @@ class SignInFragment: Fragment() {
             signInInteractionListener?.onGoToSignUp()
         }
         buttonLogin.setOnClickListener {
-            val signInModel = SignInModel(
-                inputUser.text.toString(),
-                inputPassword.text.toString()
-            )
-            signInInteractionListener?.onSignIn(signInModel)
+            if (isFormValid()) {
+                val signInModel = SignInModel(
+                    inputUser.text.toString(),
+                    inputPassword.text.toString()
+                )
+                signInInteractionListener?.onSignIn(signInModel)
+            } else {
+                showErrors()
+            }
         }
     }
+
+    private fun showErrors() {
+        if (inputUser.text.isEmpty())
+            inputUser.error = getString(R.string.error_empty)
+        if (inputPassword.text.isEmpty())
+            inputPassword.error = getString(R.string.error_empty)
+    }
+
+    private fun isFormValid() = inputUser.text.isNotEmpty() && inputPassword.text.isNotEmpty()
 
     override fun onDetach() {
         super.onDetach()

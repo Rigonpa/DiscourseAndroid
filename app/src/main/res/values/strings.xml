@@ -52,4 +52,6 @@
     <string name="message_sign_up">Please check your email to finish the process</string>
     <string name="error_duplicated_topic">Title has been already used</string>
     <string name="label_creating_topic">Creating topic</string>
+    <string name="error_password_different">Both password fields does not match</string>
+    <string name="error_no_valid_email">Please enter correct email</string>
 </resources>

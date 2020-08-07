@@ -13,6 +13,8 @@ import com.example.eh_ho.login.SignUpFragment
 import com.example.eh_ho.topics.TopicsActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.container
+import kotlinx.android.synthetic.main.fragment_create_topic.*
 
 class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListener,
     SignUpFragment.SignUpInteractionListener {
@@ -52,7 +54,6 @@ class LoginActivity : AppCompatActivity(), SignInFragment.SignInInteractionListe
     override fun onSignIn(signInModel: SignInModel) {
         // Authentication
         enableLoading()
-//        simulateLoading(signInModel)
         UserRepo.signIn(
             this.applicationContext,
             signInModel,
