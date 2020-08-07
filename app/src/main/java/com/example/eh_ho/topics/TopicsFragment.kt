@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_topics.*
 class TopicsFragment : Fragment() {
 
     var topicsInteractionListener: TopicsInteractionListener? = null
+    var loadingDialogFragment = LoadingDialogFragment()
 
     private val topicsAdapter: TopicsAdapter by lazy {
         val adapter = TopicsAdapter {
@@ -79,13 +80,16 @@ class TopicsFragment : Fragment() {
     }
 
     private fun loadingTopics() {
+        loadingDialogFragment?.show(childFragmentManager, TAG_LOADING_DIALOG)
         context?.let { context ->
             TopicsRepo.getTopics(
                 context.applicationContext,
                 {
-                   topicsAdapter.setTopics(it)
+                    loadingDialogFragment?.dismiss()
+                    topicsAdapter.setTopics(it)
                 },
                 {
+                    loadingDialogFragment?.dismiss()
                     // TODO: Manejo de errores
                 }
             )
