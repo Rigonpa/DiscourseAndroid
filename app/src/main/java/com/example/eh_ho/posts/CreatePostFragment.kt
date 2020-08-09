@@ -4,34 +4,23 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.eh_ho.R
-import com.example.eh_ho.data.PostsRepo
-import com.example.eh_ho.data.RequestError
+import com.example.eh_ho.data.*
 import com.example.eh_ho.inflate
 import com.example.eh_ho.topics.LoadingDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_create_post.*
 import kotlinx.android.synthetic.main.fragment_create_topic.*
-import kotlinx.android.synthetic.main.fragment_posts.*
 
-class PostsFragment(private val topicId: String) : Fragment() {
+class CreatePostFragment(private val topic: Topic): Fragment() {
 
-    private val loadingDialogFragment = LoadingDialogFragment()
-    private val postsAdapter: PostsAdapter by lazy {
-        val postsAdapter = PostsAdapter {
-            // TODO: Post detail appears when touching its cell
-        }
-        postsAdapter
-    }
-
-    private var postsInteractionListener: PostsInteractionListener? = null
+    var createPostInteractionListener: CreatePostInteractionListener? = null
+    var loadingDialogFragment = LoadingDialogFragment()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is PostsInteractionListener)
-            postsInteractionListener = context
+        if (context is CreatePostInteractionListener)
+            createPostInteractionListener = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,43 +33,53 @@ class PostsFragment(private val topicId: String) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return container?.inflate(R.layout.fragment_posts)
+        return container?.inflate(R.layout.fragment_create_post)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_posts, menu)
+        inflater.inflate(R.menu.menu_create_post, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_add_post)
-            this.postsInteractionListener?.addPostButtonPressed()
+        if (item.itemId == R.id.action_send_new_post)
+            startPostProcess()
         return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        postsRecyclerView.layoutManager = LinearLayoutManager(context)
-        postsRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        postsRecyclerView.adapter = postsAdapter
+        context?.let {
+            topicTitle.text = topic.title
+            postAuthor.text = UserRepo.getUsername(it.applicationContext)
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        getPosts()
+    private fun startPostProcess() {
+        if (isFormValid()){
+            postPost()
+        } else {
+            showErrors()
+        }
     }
 
-    private fun getPosts() {
-        loadingDialogFragment.show(childFragmentManager, null)
-        context?.let { context ->
-            PostsRepo.getPosts(
-                topicId,
+    private fun showErrors() {
+        inputPostContent.error = getString(R.string.error_empty)
+    }
+
+    private fun postPost() {
+        val createPostModel = CreatePostModel(
+            topic.id,
+            inputPostContent.text.toString()
+        )
+        context?.let {context ->
+            loadingDialogFragment.show(childFragmentManager, null)
+            PostsRepo.createPost(
                 context.applicationContext,
+                createPostModel,
                 {
                     loadingDialogFragment.dismiss()
-                    postsAdapter.setPosts(it)
+                    this.createPostInteractionListener?.onPostCreated()
                 },
                 {
                     loadingDialogFragment.dismiss()
@@ -98,12 +97,14 @@ class PostsFragment(private val topicId: String) : Fragment() {
         Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
     }
 
+    private fun isFormValid() = inputPostContent.text.isNotEmpty()
+
     override fun onDetach() {
         super.onDetach()
-        postsInteractionListener = null
+        createPostInteractionListener = null
     }
 
-    interface PostsInteractionListener {
-        fun addPostButtonPressed()
+    interface CreatePostInteractionListener {
+        fun onPostCreated()
     }
 }

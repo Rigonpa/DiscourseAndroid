@@ -56,4 +56,7 @@
     <string name="error_no_valid_email">Please enter correct email</string>
     <string name="message_bad">Oops something bad happened</string>
     <string name="button_retry">retry</string>
+    <string name="hint_post_text">Post text</string>
+    <string name="actionAddPost">New post</string>
+    <string name="action_send_new_post">Send</string>
 </resources>

@@ -58,13 +58,8 @@ class CreateTopicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let {
-            author.text = getUsername(it.applicationContext)
+            author.text = UserRepo.getUsername(it.applicationContext)
         }
-    }
-
-    fun getUsername(context: Context): String? {
-        val preferences = context.getSharedPreferences(PREFERENCES_SESSION, Context.MODE_PRIVATE)
-        return preferences.getString(PREFERENCES_USERNAME, null)
     }
 
     private fun createTopic() {

@@ -9,7 +9,7 @@ import com.example.eh_ho.R
 import org.json.JSONObject
 
 object TopicsRepo {
-    val topics: MutableList<Topic> = mutableListOf()
+    var topics: List<Topic> = mutableListOf()
 //        get() {
 //            if (field.isEmpty())
 //                field.addAll(createDummyTopics())
@@ -27,6 +27,7 @@ object TopicsRepo {
             null,
             {
                 val list = Topic.parseTopicList(it)
+                topics = list
                 onSuccess(list)
             },
             {
@@ -83,13 +84,34 @@ object TopicsRepo {
         ApiRequestQueue.getRequestQueue(context).add(request)
     }
 
-    fun getTopic(id: String): Topic? = topics.find { it.id == id }
+    fun getTopicById(topicId: String): Topic? = topics.find {it.id == topicId}
 
-    fun addTopic(title: String, content: String) {
-        topics.add(
-            Topic(
-                title = title
-            )
+    /* NOT NECESSARY
+    fun getTopic(
+        id: String,
+        context: Context,
+        onSuccess: (Topic) -> Unit,
+        onError: (RequestError) -> Unit
+    ) {
+        var request = PostRequest(
+            Request.Method.GET,
+            ApiRoutes.getTopic(id),
+            null,
+            {
+                onSuccess(Topic.parseTopic(it))
+            },
+            {
+                it.printStackTrace()
+                val requestError = if (it is NetworkError)
+                    RequestError(it, messageResId = R.string.error_not_internet)
+                else
+                    RequestError(it)
+                onError(requestError)
+            },
+            UserRepo.getUsername(context),
+            useApiKey = false
         )
+        ApiRequestQueue.getRequestQueue(context).add(request)
     }
+     */
 }

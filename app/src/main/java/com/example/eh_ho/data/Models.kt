@@ -46,7 +46,6 @@ data class Topic(
         }
     }
 
-
     val MINUTE_MILLIS = 1000L * 60
     val HOUR_MILLIS = MINUTE_MILLIS * 60
     val DAY_MILLIS = HOUR_MILLIS * 24
