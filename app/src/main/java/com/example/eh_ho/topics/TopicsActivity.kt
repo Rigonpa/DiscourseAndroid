@@ -2,17 +2,19 @@ package com.example.eh_ho.topics
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import com.example.eh_ho.*
 import com.example.eh_ho.data.Topic
 import com.example.eh_ho.data.UserRepo
-import kotlinx.android.synthetic.main.activity_topics.*
+import com.example.eh_ho.posts.EXTRA_TOPIC_ID
+import com.example.eh_ho.posts.PostsActivity
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
 
 class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionListener,
-    CreateTopicFragment.CreateTopicInteractionListener, ErrorTopicsInteractionListener {
+    CreateTopicFragment.CreateTopicInteractionListener,
+    ErrorFragment.ErrorTopicsInteractionListener {
 
     private val topicsFragment = TopicsFragment()
     private val createTopicFragment = CreateTopicFragment()
@@ -21,6 +23,8 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
+
+        title = "Topics"
 
         if (isFirstTimeCreated(savedInstanceState))
             supportFragmentManager.beginTransaction()
@@ -53,6 +57,7 @@ class TopicsActivity : AppCompatActivity(), TopicsFragment.TopicsInteractionList
 
     override fun onTopicCreated() {
         supportFragmentManager.popBackStack()
+        topicsFragment.loadingTopics()
     }
 
     override fun onLogout() {

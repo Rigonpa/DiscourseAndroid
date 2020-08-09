@@ -29,6 +29,15 @@ object ApiRoutes {
             .build()
             .toString()
 
+    fun getPosts(topicId: String) = "https://mdiscourse.keepcoding.io/t/${topicId}/posts.json"
+//        uriBuilder()
+//            .path("t")
+//            .path(topicId)
+//            .path("posts.json")
+//            .build()
+//            .toString()
+
+
     private fun uriBuilder() =
         Uri.Builder()
             .scheme("https")

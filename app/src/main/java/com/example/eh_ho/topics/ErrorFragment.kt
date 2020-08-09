@@ -36,8 +36,13 @@ class ErrorFragment: Fragment() {
             this.errorTopicsInteractionListener?.retry()
         }
     }
-}
 
-interface ErrorTopicsInteractionListener {
-    fun retry()
+    override fun onDetach() {
+        super.onDetach()
+        errorTopicsInteractionListener = null
+    }
+
+    interface ErrorTopicsInteractionListener {
+        fun retry()
+    }
 }

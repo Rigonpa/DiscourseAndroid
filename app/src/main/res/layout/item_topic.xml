@@ -39,8 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/iconViews"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@id/guideline"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/labelPosts"
         app:srcCompat="@drawable/ic_post" />
@@ -50,8 +51,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@id/iconPosts"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/labelViews"
         app:srcCompat="@drawable/ic_views" />

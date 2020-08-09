@@ -82,6 +82,11 @@ class SignUpFragment : Fragment() {
                 && inputPassword.text.toString() == inputConfirmPassword.text.toString()
                 && isValidEmail(inputEmail.text.toString())
 
+    override fun onDetach() {
+        super.onDetach()
+        signUpInteractionListener = null
+    }
+
     interface SignUpInteractionListener {
         fun onGoToSignIn()
         fun onSignUp(signUpModel: SignUpModel)

@@ -6,9 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.eh_ho.R
-import com.example.eh_ho.data.CreateTopicModel
-import com.example.eh_ho.data.RequestError
-import com.example.eh_ho.data.TopicsRepo
+import com.example.eh_ho.data.*
 import com.example.eh_ho.inflate
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_topic.*
@@ -55,6 +53,18 @@ class CreateTopicFragment : Fragment() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        context?.let {
+            author.text = getUsername(it.applicationContext)
+        }
+    }
+
+    fun getUsername(context: Context): String? {
+        val preferences = context.getSharedPreferences(PREFERENCES_SESSION, Context.MODE_PRIVATE)
+        return preferences.getString(PREFERENCES_USERNAME, null)
     }
 
     private fun createTopic() {
@@ -110,6 +120,11 @@ class CreateTopicFragment : Fragment() {
     }
 
     private fun isFormValid() = inputTitle.text.isNotEmpty() && inputContent.text.isNotEmpty()
+
+    override fun onDetach() {
+        super.onDetach()
+        createTopicInteractionListener = null
+    }
 
     interface CreateTopicInteractionListener {
         fun onTopicCreated()

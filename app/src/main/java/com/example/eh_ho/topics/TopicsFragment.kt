@@ -80,16 +80,16 @@ class TopicsFragment : Fragment() {
     }
 
     fun loadingTopics() {
-        loadingDialogFragment?.show(childFragmentManager, TAG_LOADING_DIALOG)
+        loadingDialogFragment.show(childFragmentManager, TAG_LOADING_DIALOG)
         context?.let { context ->
             TopicsRepo.getTopics(
                 context.applicationContext,
                 {
-                    loadingDialogFragment?.dismiss()
+                    loadingDialogFragment.dismiss()
                     topicsAdapter.setTopics(it)
                 },
                 {
-                    loadingDialogFragment?.dismiss()
+                    loadingDialogFragment.dismiss()
                     // TODO: Manejo de errores
                     this.topicsInteractionListener?.onErrorTopics()
                 }
