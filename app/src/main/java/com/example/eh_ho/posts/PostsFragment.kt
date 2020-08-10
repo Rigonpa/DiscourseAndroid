@@ -64,6 +64,12 @@ class PostsFragment(private val topicId: String) : Fragment() {
         postsRecyclerView.layoutManager = LinearLayoutManager(context)
         postsRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         postsRecyclerView.adapter = postsAdapter
+
+        swipeRefresh.setOnRefreshListener {
+            getPosts()
+            swipeRefresh.isRefreshing = false
+        }
+
     }
 
     override fun onResume() {

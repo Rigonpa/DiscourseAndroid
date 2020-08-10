@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.eh_ho.R
 import com.example.eh_ho.data.Topic
 import com.example.eh_ho.data.TopicsRepo
@@ -71,6 +72,13 @@ class TopicsFragment : Fragment() {
         listTopics.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         listTopics.adapter = topicsAdapter
+
+
+        swipeRefresh.setOnRefreshListener {
+            loadingTopics()
+            swipeRefresh.isRefreshing = false
+        }
+
     }
 
     override fun onResume() {
