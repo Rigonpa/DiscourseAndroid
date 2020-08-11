@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".topics.TopicsFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,10 +14,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listTopics"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonCreate"
@@ -26,6 +27,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
-        app:srcCompat="@drawable/ic_add"/>
+        app:srcCompat="@drawable/ic_add"
+        app:layout_anchor="@id/listTopics"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior=".topics.ScrollAwareFABBehaviour"/>
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
