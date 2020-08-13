@@ -51,9 +51,11 @@ class ScrollAwareFABBehaviour(context: Context?, attrs: AttributeSet?) : Floatin
         )
 
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {
-            child.hide()
-        } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {
-            child.show()
+            val params = child.layoutParams as CoordinatorLayout.LayoutParams
+            val toTranslate = child.height.toFloat() + params.bottomMargin
+            child.animate().translationY(toTranslate)
+        } else if (dyConsumed < 0 ) {
+            child.animate().translationY(0F)
         }
     }
 }
