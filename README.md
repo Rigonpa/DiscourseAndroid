@@ -1,6 +1,6 @@
 # DiscourseAndroid
 
-> App that consumes topics and posts from Discourse api.
+> App that creates and consumes topics and posts from Discourse api.
 
 - RecyclerView
 - Fragments
